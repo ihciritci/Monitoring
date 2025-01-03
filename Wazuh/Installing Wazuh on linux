@@ -1,0 +1,36 @@
+
+
+# https://documentation.wazuh.com/current/quickstart.html
+
+$ curl -sO https://packages.wazuh.com/4.9/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+
+INFO: --- Summary ---
+INFO: You can access the web interface https://<wazuh-dashboard-ip>
+    User: admin
+    Password: <ADMIN_PASSWORD>
+INFO: Installation finished.
+
+# Access the Wazuh web interface with https://<wazuh-dashboard-ip> and your credentials:
+
+Username: admin
+Password: <ADMIN_PASSWORD>
+
+
+# if clear the screen 
+$ sudo tar -O -xvf wazuh-install-files.tar wazuh-install-files/wazuh-passwords.txt 
+
+
+$ sudo ufw allow 443/tcp
+$ sudo ufw allow 1514/tcp
+$ sudo ufw allow 1515/tcp
+$ sudo ufw allow 55000/tcp
+
+$ systemctl daemon-reload
+$ systemctl enable wazuh-indexer
+$ systemctl enable wazuh-manager
+$ systemctl enable wazuh-dashboard
+$ systemctl enable filebeat
+$ systemctl start wazuh-indexer
+$ systemctl start wazuh-manager
+$ systemctl start wazuh-dashboard
+$ systemctl start filebeat

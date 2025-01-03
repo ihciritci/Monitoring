@@ -1,0 +1,130 @@
+Zabbix agent	10050	TCP	on demand
+Zabbix agent 2	10050	TCP	on demand
+Zabbix server	10051	TCP	on demand
+Zabbix proxy	10051	TCP	on demand
+Zabbix Java gateway	10052	TCP	on demand
+Zabbix web service	10053	TCP	on demand
+Zabbix frontend	80	HTTP	on demand
+443	HTTPS	on demand
+Zabbix trapper	10051	TCP	on demand
+
+#################################################################################
+## Zabbix Zercode Ubuntu Firewall and User Configurations  ###
+
+sudo nano /etc/hosts.allow
+
+	ALL: 78.167.113.146
+	ALL: 87.98.243.41
+	
+	ALL: 94.23.152.206
+	ALL: 13.69.74.78
+	ALL: 94.23.158.131
+	ALL: 94.23.152.87
+	ALL: 94.23.152.34
+
+
+abbix_agentd: 78.167.113.146
+zabbix_agentd: 87.98.243.41
+sshd: 78.167.113.146
+sshd: 87.98.243.41
+
+
+sudo nano /etc/hosts.deny
+
+sshd: all
+
+sudo systemctl restart sshd
+
+# UFW Settings
+
+zadmin@ZabbixZercode:~$ sudo ufw status   / sudo ufw status verbose
+Status: active
+
+To                         Action      From
+--                         ------      ----
+10000/tcp                  ALLOW       Anywhere
+22                         ALLOW       78.167.113.146
+10050/tcp                  ALLOW       Anywhere
+10051/tcp                  ALLOW       Anywhere
+80/tcp                     ALLOW       Anywhere
+443                        ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
+8080/tcp                   ALLOW       Anywhere
+10050                      ALLOW       Anywhere
+10051                      ALLOW       Anywhere
+10050/udp                  ALLOW       Anywhere
+10051/udp                  ALLOW       Anywhere
+22                         ALLOW       87.98.243.41
+22                         ALLOW       94.23.152.206
+10000                      ALLOW       94.23.152.206
+10000                      ALLOW       Anywhere
+10000/udp                  ALLOW       Anywhere
+22/tcp                     ALLOW       Anywhere
+10000/tcp (v6)             ALLOW       Anywhere (v6)
+10051/tcp (v6)             ALLOW       Anywhere (v6)
+80/tcp (v6)                ALLOW       Anywhere (v6)
+443 (v6)                   ALLOW       Anywhere (v6)
+443/tcp (v6)               ALLOW       Anywhere (v6)
+8080/tcp (v6)              ALLOW       Anywhere (v6)
+10050 (v6)                 ALLOW       Anywhere (v6)
+10051 (v6)                 ALLOW       Anywhere (v6)
+10050/udp (v6)             ALLOW       Anywhere (v6)
+10051/udp (v6)             ALLOW       Anywhere (v6)
+10000 (v6)                 ALLOW       Anywhere (v6)
+10000/udp (v6)             ALLOW       Anywhere (v6)
+22/tcp (v6)                ALLOW       Anywhere (v6)
+
+ sudo ufw status numbered
+ sudo ufw delete 3
+ sudo ufw delete 16
+ sudo ufw status numbered
+ sudo ufw delete 15
+
+
+
+# History
+
+  106  sudo ufw allow from 87.98.243.41 to any port 22
+  107  sudo ufw allow from 78.167.113.146 to any port 22
+  
+# Show Login/Attack to server via SSH
+ 
+  grep "Failed password" /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq
+  grep "Accepted" /var/log/auth.log | awk '{print $9, $11}' | sort | uniq
+  grep "Accepted" /var/log/auth.log | awk '{print $1, $2, $3, $9, $11}' | sort | uniq
+
+
+#No IPv6 
+nano /etc/default/ufw
+
+IPV6=no
+
+
+sudo systemctl restart ufw
+
+sudo netstat -tuln | grep 1005
+
+sudo systemctl restart zabbix-server zabbix-agent
+
+sudo tail -f /var/log/zabbix/zabbix_server.log
+
+zabbix_get -s ZABBIX_SERVER_IP -k agent.ping
+
+
+
+sudo ufw allow 53    # DNS port for Update and other DNS 
+
+sudo nano /etc/resolv.conf  
+
+	nameserver 8.8.8.8
+	nameserver 1.1.1.1
+
+sudo nano /etc/systemd/resolved.conf
+
+
+
+
+
+
+
+  
