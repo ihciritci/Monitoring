@@ -11,6 +11,7 @@ Red Hat Enterprise Linux 7, 8, 9	Ubuntu 16.04, 18.04, 20.04, 22.04
 # https://documentation.wazuh.com/current/quickstart.html
 
 $ curl -sO https://packages.wazuh.com/4.9/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+  curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
 
 INFO: --- Summary ---
 INFO: You can access the web interface https://<wazuh-dashboard-ip>
