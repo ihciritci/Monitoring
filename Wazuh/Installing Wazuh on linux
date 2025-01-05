@@ -7,6 +7,10 @@ Agents	CPU	RAM	Storage (90 days)
 Amazon Linux 2	                    CentOS 7, 8
 Red Hat Enterprise Linux 7, 8, 9	Ubuntu 16.04, 18.04, 20.04, 22.04
 
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
+echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list
+apt-get update
+
 
 # https://documentation.wazuh.com/current/quickstart.html
 
@@ -43,3 +47,13 @@ $ systemctl start wazuh-indexer
 $ systemctl start wazuh-manager
 $ systemctl start wazuh-dashboard
 $ systemctl start filebeat
+
+
+
+##########################################################################
+## wAZUH AGENT
+WAZUH_MANAGER="10.0.0.2" apt-get install wazuh-agent=4.7.5-1
+systemctl daemon-reload
+systemctl enable wazuh-agent
+systemctl start wazuh-agent
+
