@@ -1,0 +1,35 @@
+* Wazuh Manager  
+                Port: 1514/UDP and 1515/TCP     IN/OUT
+                Port: 55000/TCP                 IN/OUT
+
+* Wazuh Agent  
+                Port: 1514/UDP (out) and  Port: 1515/TCP  (out)
+
+
+* Elasticsearch   
+                Port: 9200/TCP   IN/OUT
+                Port: 9300/TCP   IN/OUT
+
+* Wazuh Dashboard       Port: 443/TCP veya 5601/TCP    IN/OUT
+  (FOR KIBANA ENTEGRASION) 
+* Wazuh Filebeat          Port: 5044/TCP    OUT
+
+
+
+Wazuh Manager	 1514	UDP	IN/OUT	
+Wazuh Manager	 1515	TCP	IN/OUT	
+Wazuh Manager	 55000	TCP	IN/OUT	
+Elasticsearch	 9200	TCP	IN/OUT	
+Elasticsearch	  9300	TCP	IN/OUT
+Wazuh Dashboard	443	TCP	IN/OUT	
+Filebeat	      5044	TCP	OUT	
+
+
+sudo ufw allow 1514/udp
+sudo ufw allow 1515/tcp
+sudo ufw allow 55000/tcp
+sudo ufw allow 9200/tcp
+sudo ufw allow 9300/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 5044/tcp
+sudo ufw enable
